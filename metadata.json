@@ -1,0 +1,6 @@
+{
+  "name": "TransitPulse",
+  "description": "High-contrast real-time transit telemetry, mechanical countdown wayfinding, and interactive civic transit map.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
