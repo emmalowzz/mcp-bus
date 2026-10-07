@@ -25,6 +25,7 @@ import { VehicleInspector } from './components/VehicleInspector';
 import { TripPlanner } from './components/TripPlanner';
 import { LinesDirectory } from './components/LinesDirectory';
 import { AlertsModal } from './components/AlertsModal';
+import { LtaArrivalsView } from './components/LtaArrivalsView';
 
 export default function App() {
   const [stops, setStops] = useState<TransitStop[]>(INITIAL_STOPS);
@@ -207,6 +208,10 @@ export default function App() {
               onRefreshTelemetry={handleRefreshTelemetry}
               onTrackOnMap={handleTrackOnMap}
             />
+          )}
+
+          {activeTab === 'lta' && (
+            <LtaArrivalsView />
           )}
 
           {activeTab === 'trips' && (

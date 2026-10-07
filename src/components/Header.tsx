@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { soundFX } from '../utils/audio';
 
-export type ActiveNavTab = 'arrivals' | 'map' | 'trips' | 'lines';
+export type ActiveNavTab = 'arrivals' | 'lta' | 'map' | 'trips' | 'lines';
 
 interface HeaderProps {
   activeTab: ActiveNavTab;
@@ -65,6 +65,18 @@ export const Header: React.FC<HeaderProps> = ({
           }`}
         >
           Live Arrivals
+        </button>
+
+        <button
+          onClick={() => onTabChange('lta')}
+          className={`transition-colors whitespace-nowrap py-1 relative flex items-center gap-1.5 ${
+            activeTab === 'lta'
+              ? 'text-[#2563EB] font-bold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#2563EB]'
+              : 'hover:text-slate-900'
+          }`}
+        >
+          <span>SG Bus (LTA)</span>
+          <span className="text-[10px] font-mono font-extrabold bg-blue-100 text-[#2563EB] px-1 rounded">v3</span>
         </button>
 
         <button

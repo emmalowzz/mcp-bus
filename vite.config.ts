@@ -1,11 +1,48 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, type Plugin} from 'vite';
+
+function apiDevServerPlugin(): Plugin {
+  return {
+    name: 'api-dev-server-plugin',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (!req.url) return next();
+        
+        if (req.url.startsWith('/api/health')) {
+          try {
+            const { default: handler } = await import('./api/health.js');
+            return handler(req, res);
+          } catch (err) {
+            console.error('Error handling /api/health:', err);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: String(err) }));
+            return;
+          }
+        }
+        
+        if (req.url.startsWith('/api/bus-arrival')) {
+          try {
+            const { default: handler } = await import('./api/bus-arrival.js');
+            return handler(req, res);
+          } catch (err) {
+            console.error('Error handling /api/bus-arrival:', err);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: String(err) }));
+            return;
+          }
+        }
+        
+        next();
+      });
+    }
+  };
+}
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), apiDevServerPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
